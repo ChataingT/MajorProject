@@ -1,7 +1,6 @@
 package sensor;
 import java.util.List;
-
-import model.environment.Coord;
+import javaSimulation.Coord;
 
 
 

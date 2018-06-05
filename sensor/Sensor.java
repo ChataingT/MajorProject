@@ -1,8 +1,7 @@
 package sensor;
 
 import java.util.*;
-
-import model.environment.Coord;
+import javaSimulation.Coord;
 
 
 /**
