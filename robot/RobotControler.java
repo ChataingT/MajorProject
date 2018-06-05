@@ -1,8 +1,8 @@
 package model.robot;
 
 import java.util.*;
+import javaSimulation.Coord;
 
-import model.environment.Coord;
 import model.environment.Map;
 
 
@@ -30,8 +30,8 @@ public class RobotControler {
    * Get the value of robot
    * @return the value of robot
    */
-  public Robot getRobot () {
-    return robot;
+  public Coord getRobotCoord () {
+    return robot.getCoord();
   }
 
   //

@@ -1,8 +1,7 @@
 package model.robot;
 
-import model.environment.Coord;
-
 import java.util.*;
+import javaSimulation.Coord;
 
 import model.environment.Map;
 import sensor.Detector;
