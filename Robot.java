@@ -67,7 +67,7 @@ public class Robot {
    * Set the value of coord
    * @param newVar the new value of coord
    */
-  private void setCoord (Coord coord) {
+  protected void setCoord (Coord coord) {
     this.coord = coord;
   }
 
@@ -75,7 +75,7 @@ public class Robot {
    * Get the value of coord
    * @return the value of coord
    */
-  private Coord getCoord () {
+  protected Coord getCoord () {
     return coord;
   }
 
@@ -83,7 +83,7 @@ public class Robot {
    * Set the value of Orientation
    * @param newVar the new value of Orientation
    */
-  private void setOrientation (Orientation newVar) {
+   protected void setOrientation (Orientation newVar) {
     this.orientation = newVar;
   }
 
@@ -91,7 +91,7 @@ public class Robot {
    * Get the value of Orientation
    * @return the value of Orientation
    */
-  public Orientation getOrientation () {
+   protected Orientation getOrientation () {
     return orientation;
   }
 
@@ -99,15 +99,15 @@ public class Robot {
    * Set the value of discoveredMap
    * @param newVar the new value of discoveredMap
    */
-  public void setDiscoveredMap (Map newVar) {
-    this.discoveredMap = newVar;
+   protected void setDiscoveredMap (Map map) {
+	   this.discoveredMap.union(map);
   }
 
   /**
    * Get the value of discoveredMap
    * @return the value of discoveredMap
    */
-  public Map getDiscoveredMap () {
+   protected Map getDiscoveredMap () {
     return discoveredMap;
   }
 
@@ -117,55 +117,14 @@ public class Robot {
   // Other methods
   //
 
-  /** Move the robot of one case in the north
-   * @return       Boolean
-   */
-  public Boolean up()
-  {
-	  this.setCoord(Coord.add(this.getCoord(), new Coord(1, 0)));
-	  this.setOrientation(Orientation.NORTH);
-	  return true;
-  }
-
-
-  /** Move the robot of one case in the South
-   * @return       Boolean
-   */
-  public Boolean down()
-  {
-	  this.setCoord(Coord.add(this.getCoord(), new Coord(-1, 0)));
-	  this.setOrientation(Orientation.SOUTH);
-	  return true;
-  }
-
-
-  /** Move the robot of one case in the West
-   * @return       Boolean
-   */
-  public Boolean left()
-  {
-	  this.setCoord(Coord.add(this.getCoord(), new Coord(0, -1)));
-	  this.setOrientation(Orientation.WEST);
-	  return true;
-  }
-
-
-  /** Move the robot of one case in the East
-   * @return       Boolean
-   */
-  public Boolean right()
-  {
-	  this.setCoord(Coord.add(this.getCoord(), new Coord(0, 1)));
-	  this.setOrientation(Orientation.EAST);
-	  return true;
-  }
+ 
 
 
   /** Get the list of coordinate of all the case detected by the robot.
    * The coordinate are in absolute referential.
    * @return   List<Coord>    
    */
-  public List<Coord> getView()
+   protected List<Coord> getView()
   {
 	  List<Coord> ret = new ArrayList<Coord>();
 	  List<Coord> list = new ArrayList<Coord>();
@@ -179,39 +138,19 @@ public class Robot {
 		  newCoord = Coord.add(this.coord, c); // Go to the absolute referentiel
 		  ret.add(newCoord);
 	  }
-	  System.out.println(ret);
 
 	  return ret;
   }
   
   public String toString(){
 	  String ret = "[ ROBOT : Current coordinate : "+ this.coord 
-			  + "\tCurrent orientation : " + this.orientation + " ]";
+			  + "   Current orientation : " + this.orientation + " ]";
 	  return ret;
   }
   public static void main(String[] args) {
 	Robot robot = new Robot();
 
-	System.out.println(robot);
-	System.out.println(robot.getView());
-	robot.up();
-	System.out.println(robot.getCoord());
-	System.out.println(robot.getView());
-	robot.left();
-	System.out.println(robot.getCoord());
-	System.out.println(robot.getView());
-	robot.down();
-	System.out.println(robot.getCoord());
-	System.out.println(robot.getView());
-	robot.down();
-	robot.right();
-	System.out.println(robot.getCoord());
-	System.out.println(robot.getView());	
-	Coord a = new Coord(5, -1);
-	Coord b = new Coord(2, 4);
-	System.out.println(Coord.add(a, b));
-
-	System.out.println(robot);
+	
 }
   
 }
