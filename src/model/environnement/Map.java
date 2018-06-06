@@ -69,7 +69,7 @@ public Map (Coord size) {
   }
   
   
-  /*
+  /**
    * Compare deux maps et ajoute à l'ancienne les cases découvertes en plus de la nouvelle
    */
   public static Map unionMap (Map oldMap, Map newMap){

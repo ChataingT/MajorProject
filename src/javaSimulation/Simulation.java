@@ -16,6 +16,7 @@ import model.environnement.Map;
 
 /**
  * Class Simulation
+ * @author thibaut.chataing
  */
 public class Simulation {
 
@@ -161,12 +162,12 @@ public class Simulation {
 		  etatCase = environment.getEtat(coordCase);
 		  
 		  if (etatCase.equals(Etat.OBSTACLE)){
-			  nbrObst++;
+			  nbrObst++;						// Incrementing of obstacle's count
 		  }
-		  e.setEtat(coordCase, environment.getEtat(coordCase));
-		  map.addCase(coordCase,environment.getEtat(coordCase));
+		  e.setEtat(coordCase, environment.getEtat(coordCase)); // copy of the information of the case
+		  map.addCase(coordCase,environment.getEtat(coordCase)); // add of case in the map
 	  }
-	this.measure.setNbSeeingObst(nbrObst);
+	this.measure.setNbSeeingObst(nbrObst); // update of the obstacle's count
 	matrixViewRobot = e.environmentToMatrixAff();
 	this.updateRobotDiscoveredMap(map);
 
@@ -175,6 +176,9 @@ public class Simulation {
   // Other methods
   //
 
+  //
+  // To move the robot
+  //
 /**Test if next case is in the environment and if there is not an obstacle on the way
    * If not, make the move
    * @return       Boolean to acquire 
@@ -183,7 +187,7 @@ public class Simulation {
   {
 	  Coord newCoord = Coord.add(this.robotControler.getRobotCoord(), new Coord(-1, 0));
 	  Boolean ret = false;
-	  if (newCoord.x >= 0){ // Test the limit of the environnement
+	  if (newCoord.x >= 0){ // Test the limit of the environment
 		  Etat etatNextCase = this.environment.getEtat(newCoord);
 		  if ( etatNextCase.compareTo(Etat.OBSTACLE) != 0 ){ // Test if the next case is an obstacle
 			  ret = this.robotControler.up();
@@ -275,9 +279,9 @@ public class Simulation {
 	  return ret;
   }
 
-
-
-  
+  //
+  // To update the different map
+  //
   /**
    * Update of the map of the robot
    * @param map
@@ -286,8 +290,6 @@ public class Simulation {
 	  this.robotControler.updateDiscoveredMap(map);
   }
 
- 
-  
   /**
    * Add the robot in the board
    * @param e all environment
@@ -300,6 +302,7 @@ public class Simulation {
 	  ret[coordRobot.x][coordRobot.y] = "R : "+this.robotControler.getRobotOrientation().toString();
 	  return ret;
   }
+  
   
   /**
    * Convert a board in a 1D string
@@ -343,9 +346,9 @@ public class Simulation {
   }
   
   
-  ////
-  //method to display in command line
-  ////
+  //
+  // To display in command line
+  //
   
   /**
    * Display in command line the environment

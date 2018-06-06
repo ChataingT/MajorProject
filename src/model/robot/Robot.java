@@ -1,5 +1,7 @@
 package model.robot;
-
+/**
+ * @author thibaut.chataing
+ */
 import java.util.*;
 
 import model.Coord;

@@ -1,29 +1,33 @@
 package javaSimulation;
 
+/**
+ * 
+ * @author thibaut.chataing
+ *
+ */
 public class Launcher {
 
 	public static void main(String[] args) {
-			Simulation sim = new Simulation(30, 30, 10,0);
-			sim.down();
+			Simulation sim = new Simulation(15, 15, 10,0);
+			sim.right();
+			sim.left();
 			sim.right();
 			sim.down();
 			sim.right();
 			sim.down();
+			sim.down();
+			sim.left();
+			sim.up();
+			sim.right();
 			sim.right();
 			sim.down();
+			sim.up();
 			sim.right();
+			sim.left();
+			sim.left();
 			sim.down();
-			sim.right();
 			sim.down();
-			sim.right();
-			sim.down();
-			sim.right();
-			sim.down();
-			sim.right();
-			sim.down();
-			sim.right();
-			sim.down();
-			sim.right();
+			sim.up();
 			sim.affEnvironnement();
 			sim.affView();
 			sim.affRobotDiscoveredMap();

@@ -7,6 +7,7 @@ import model.Coord;
 
 /**
  * Interface Detector
+ * @author thibaut.chataing
  */
 public interface Detector {
 

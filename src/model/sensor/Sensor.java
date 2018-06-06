@@ -8,6 +8,7 @@ import model.Coord;
 /**
  * Class Sensor
  * Sensor can detect two cases in North, East, South, West and one case in North-East, North-West, South-East, South-West.
+ * @author thibaut.chataing
  */
 public class Sensor implements Detector {
 

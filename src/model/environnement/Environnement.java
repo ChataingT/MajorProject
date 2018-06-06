@@ -7,6 +7,7 @@ import model.Coord;
 
 /**
  * Class Environnement
+ * @author justine.devaux and thibaut.chataing
  */
 public class Environnement {
 
@@ -61,6 +62,10 @@ public class Environnement {
 	  
   };
   
+  /**
+   * Constructor to generate an environment with the state UNKNOWN everywhere
+   * @param size
+   */
   public Environnement (Coord size){
 	  this.size = size;
 	  this.obstaclePercent=0;
@@ -89,43 +94,38 @@ public class Environnement {
     return size;
   }
   
+  /**
+   * Set the value of etat
+   * @param c
+   * @param e
+   */
   public void setEtat(Coord c, Etat e){
 	  map.setEtatCase(c, e);
   }
 
   /**
-   * Permet de calculer le nombre de case en fonction de size
-   * @return nb de case
-   */
-  private Integer nbCase(){
-	  Integer nbCase = 0;
-	  nbCase = size.x * size.y ;
-	  return nbCase;
-  }
-  
-  /**
-   * Set the value of obstaclePercent
-   * @param newVar the new value of obstaclePercent
-   */
-  private void setObstaclePercent (Integer obstaclePercent) {
-    obstaclePercent = obstaclePercent;
-  }
-
-
-  /**
    * Get the value of obstaclePercent
    * @return the value of obstaclePercent
    */
-  private Integer getObstaclePercent () {
+  public Integer getObstaclePercent () {
     return obstaclePercent;
   }
   
+  /**
+   * Get the state of the case in the chosen coordinate
+   * @param coord
+   * @return
+   */
   public Etat getEtat (Coord coord){
 	  Etat etatCase= Etat.UNKNOWN;
 	  etatCase=map.getEtatCase(coord);
 	  return etatCase;
   }
   
+  /**
+   * Convert an environment to a board with label FREE/UNKW/OBST/SPBP
+   * @return String[][]
+   */
   public String[][] environmentToMatrixTest(){
 	  String[][] matrix = new String[size.x][size.y];
 	  for (int j = 0 ; j < getSize().x ; j++ ){
@@ -136,6 +136,10 @@ public class Environnement {
 	return matrix; 
   }
   
+  /**
+   * Convert an environment to a board with label ./#/?/~
+   * @return String[][]
+   */
   public String[][] environmentToMatrixAff(){
 	  String[][] matrix = new String[size.x][size.y];
 	  for (int j = 0 ; j < getSize().x ; j++ ){

@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 
 /**
- * @author francoise.perrin
+ * @author francoise.perrin and thibaut.chataing
  *
  */
 public class Coord implements Serializable {

@@ -1,5 +1,9 @@
 package model.robot;
-
+/**
+ * 
+ * @author thibaut.chataing
+ *
+ */
 public enum Orientation {
 	NORTH, SOUTH, EAST, WEST;
 	

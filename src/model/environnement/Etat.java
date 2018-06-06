@@ -2,7 +2,7 @@ package model.environnement;
 
 /**
  * Etat possible d'une case
- * @author justine.devaux
+ * @author thibaut.chataing
  *
  */
 public enum Etat {
@@ -27,6 +27,10 @@ public enum Etat {
 		return ret;
 	}
 	
+	/**
+	 * Display more pretty than toString()
+	 * @return
+	 */
 	public String toAff(){
 		String ret = null;
 		if (this.equals(FREE) ){
