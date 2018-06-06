@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang='en-US'>
+<head>
+    <title>Administration</title>
+    <meta charset='UTF-8' />
+    <link href="css/main.css" media="screen" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    
+    <div id="main">
+        
+        <header>
+            <div class="header-nav" id="headerWaiting">En attente<img class="header-icon" src="img/verrouille.svg" alt="Verrouillé"></div>
+            <div class="header-nav" id="headerRunning">En cours<img class="header-icon" src="img/rouage.svg" alt="En cours"></div>
+            <div class="header-nav" id="headerLocked">Occupé<img class="header-icon" src="img/verrouille.svg" alt="Verouillé"></div>
+            <div class="header-nav" id="headerUnlocked" style="display: inherit;">Disponible<img class="header-icon" src="img/deverrouille.svg" alt="Dévérouillé"></div>
+        </header>
+
+        <div id="left">
+            
+            <div id="mapContainer">
+                <canvas class="map" width="1600" height="1600"></canvas>
+            </div>
+            
+            <div id="remote">
+            
+                <svg id="remoteSvg" version="1.1" viewBox="0 0 304.02 304.02" xmlns="http://www.w3.org/2000/svg">
+                    <g transform="translate(214 107.5)">
+                        
+                        <g class="arrowGroup" id="leftArrow">
+                            <circle cx="-159.01" cy="44.512" r="54.982" />
+                            <path d="m-139.82 6.0794-54.464 38.432 54.464 38.433-6.0616-22.622 23.418-6.2745v-19.072l-23.418-6.2751z" fill="#e0e0e0" stroke="#000" stroke-width="3.465"/>
+                        </g>
+                        
+                        <g class="arrowGroup" id="upArrow">
+                            <circle cx="-61.988" cy="-52.514" r="54.982" />
+                            <path d="m-23.556-33.324-38.432-54.464-38.433 54.464 22.622-6.0616 6.2746 23.418h19.072l6.2751-23.418z" fill="#e0e0e0" stroke="#000" stroke-width="3.465"/>
+                        </g>
+                        
+                        <g class="arrowGroup" id="rightArrow">
+                            <circle cx="35.038" cy="44.512" r="54.982" />
+                            <path d="m15.848 82.944 54.464-38.432-54.464-38.433 6.0616 22.622-23.418 6.2745v19.072l23.418 6.2751z" fill="#e0e0e0" stroke="#000" stroke-width="3.465"/>
+                        </g>
+                        
+                        <g class="arrowGroup" id="downArrow">
+                            <circle cx="-61.988" cy="141.54" r="54.982" />
+                            <path d="m-100.42 122.35 38.432 54.464 38.433-54.464-22.622 6.0616-6.2746-23.418h-19.072l-6.2751 23.418z" fill="#e0e0e0" stroke="#000" stroke-width="3.465"/>
+                        </g>
+                    </g>
+                </svg>
+
+            </div>
+            
+        </div>
+
+        <div id="stats">Stats
+        </div>
+        
+    </div>
+    
+    <script src="lib/jquery-3.2.1.min.js" type="text/javascript"></script>
+    <script type="module" src="js/Client.js"></script>
+    
+</body>
+</html>

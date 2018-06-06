@@ -1,0 +1,71 @@
+html, body
+{
+    height: 100%;
+    margin: 0; padding: 0;
+}
+#main
+{
+    padding: 0; margin: 0;
+    height: 100%; width: 100%;
+}
+#left
+{
+    position: absolute;
+    top: 0;
+    background-color: aliceblue;
+    top: 100px; bottom: 0; width: 70%;
+}
+#mapContainer
+{
+    overflow: auto;
+    width: 100%; height: 70%;
+}
+#remote
+{
+    height: 30%; width: 100%;
+    background-color: cadetblue;
+    display: flex;
+    justify-content: center;
+}
+#stats
+{
+    position: absolute; right: 0;
+    background-color: beige;
+    top: 100px; bottom: 0; 
+    width: 30%;
+}
+#remoteSvg {
+    height: 100%;
+}
+
+.arrowGroup circle
+{
+    fill: transparent;
+}
+.arrowGroup:hover circle
+{
+    fill: #c6fafa20;
+}
+.arrowGroup:active circle
+{
+    fill: #c6fafa;
+}
+.header-icon {
+    vertical-align: middle;
+    margin: 0 0.5em;
+    height: 100%;
+}
+
+.header-nav {
+    box-sizing: border-box;
+    text-align: right;
+    height: 100px;
+    padding: 1em;
+    
+    display: none;
+}
+
+header {
+    font-size: 25px;
+    background-color: #cec7b9;
+}
