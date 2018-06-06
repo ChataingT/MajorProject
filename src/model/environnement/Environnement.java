@@ -127,7 +127,6 @@ public class Environnement {
   }
   
   public String[][] environmentToMatrixTest(){
-	  System.out.println(size);
 	  String[][] matrix = new String[size.x][size.y];
 	  for (int j = 0 ; j < getSize().x ; j++ ){
 		  for (int i = 0 ; i < getSize().x ; i++ ){
@@ -138,7 +137,6 @@ public class Environnement {
   }
   
   public String[][] environmentToMatrixAff(){
-	  System.out.println(size);
 	  String[][] matrix = new String[size.x][size.y];
 	  for (int j = 0 ; j < getSize().x ; j++ ){
 		  for (int i = 0 ; i < getSize().x ; i++ ){

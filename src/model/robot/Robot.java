@@ -37,6 +37,7 @@ public class Robot {
 	  this.orientation = Orientation.NORTH; // Orientation initial
 	  this.listDetector = new ArrayList<Detector>(); // add of the sensor
 	  this.listDetector.add(new Sensor());
+	  this.discoveredMap = new Map();
   };
   
   /**
@@ -50,6 +51,8 @@ public class Robot {
 	  this.orientation = orientation; // Orientation initial
 	  this.listDetector = new ArrayList<Detector>(); // add of the sensor
 	  this.listDetector.add(new Sensor());
+	  this.discoveredMap = new Map();
+
   }
   
   

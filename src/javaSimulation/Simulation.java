@@ -1,14 +1,17 @@
 package javaSimulation;
+import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.List;
 import java.util.Locale;
 
 import model.Coord;
 import model.robot.Measure;
+import model.robot.Orientation;
 import model.robot.RobotControler;
 import model.environnement.Case;
 import model.environnement.Environnement;
 import model.environnement.Etat;
+import model.environnement.Map;
 
 
 /**
@@ -21,18 +24,19 @@ public class Simulation {
   //
 
   private RobotControler robotControler;
-  private Environnement environnement;
+  private Environnement environment; // all of the environment of the robot
   private Measure measure;
-  private String[][] matrix;
+  private String[][] matrixEnvironment;
+  private String[][] matrixViewRobot;
   
   //
   // Constructors
   //
   public Simulation (Integer x, Integer y, Integer obstaclePourcent, Integer speedBumpPourcent) { 
 	  this.robotControler = new RobotControler();
-	  this.environnement = new Environnement(new Coord(x, y), obstaclePourcent, speedBumpPourcent);
+	  this.environment = new Environnement(new Coord(x, y), obstaclePourcent, speedBumpPourcent);
 	  this.measure = new Measure();
-	  this.refreshAff();
+	  this.refreshAttribut();
 
   };
   
@@ -48,20 +52,130 @@ public class Simulation {
 
 
   /**
-   * Get the value of Environnement
+   * Get the value of Environment
    * @return the value of Environnement
    */
   public Environnement getEnvironnement () {
-    return environnement;
+    return environment;
   }
 
+  /**
+   * Get the value of the environment in a string 2D
+   * @return the value of matrixEnvironnement
+   */
+  public String[][] getMatrixEnvironment() {
+	return matrixEnvironment;
+  }
+
+
+/**
+ * Get the value of the view of the robot in a string 2D
+ * @return the value of Environnement
+ */
+  public String[][] getMatrixViewRobot() {
+	return matrixViewRobot;
+	}
+
+  /**
+   * Get the board of the environment already discovered by the robot
+   */
+  public String[][] getMatrixKnownEnvironment()
+  {
+	  Map map = this.robotControler.getRobotEnvironnement();
+	  Environnement e = new Environnement(this.environment.getSize());
+	  Etat etatCase;
+	  
+	  for(Coord coordCase : map.getListCoord()){
+		  etatCase = environment.getEtat(coordCase);
+		  e.setEtat(coordCase, environment.getEtat(coordCase));
+	  }
+	  String[][] sEnvRobot = e.environmentToMatrixAff();
+	  return sEnvRobot;
+  }
+  
+  /**
+   * Get the coordinate of the robot
+   */
+  public List<Integer> getCoordRobot(){
+	  List<Integer> ret = new ArrayList<Integer>();
+	  Coord c = this.robotControler.getRobotCoord();
+	  ret.add(c.x);
+	  ret.add(c.y);
+	  return ret;
+  }
+  
+  /**
+   * Get the count of the command done since the start of the simulation
+   * @return Integer
+   */
+  public Integer getNbCmd(){
+	  return this.measure.getNbCmd();
+  }
+  
+  /**
+   * Get the count of the obstacle met since the start of the simulation
+   * @returnInteger
+   */
+  public Integer getNbMetObst(){
+	  return this.measure.getNbMetObst();
+  }
+  
+  /**
+   * Get the number of obstacle detect by the robot at this moment
+   * @return Integer
+   */
+  public Integer getNbSeeingObst(){
+	  return this.measure.getNbSeeingObst();
+  }
+  
+  /**
+   * Get the distance traveled (in case ~= 20cm) since the start of the simulation
+   * @return Integer
+   */
+  public Integer getDistanceTraveled(){
+	  return this.measure.getDistanceTraveled();
+  }
+  
+  /**
+   * Get the current orientation of the robot
+   * @return Orientation 
+   */
+  public Orientation getRobotOrientation(){
+	  return this.robotControler.getRobotOrientation();
+  }
+  
+ 
+  
+  /**Extract the view of the robot defined by his sensor
+   * @return String[][] board with the information of each case : unknown/free/obstacle/speedbump
+   */
+  public void getView()
+  {
+	  Environnement e = new Environnement(this.environment.getSize());
+	  Map map= new Map();
+	  Integer nbrObst = 0;
+	  List<Coord> caseDetected = this.robotControler.getView();
+	  Etat etatCase;
+	  
+	  for(Coord coordCase : caseDetected){
+		  etatCase = environment.getEtat(coordCase);
+		  
+		  if (etatCase.equals(Etat.OBSTACLE)){
+			  nbrObst++;
+		  }
+		  e.setEtat(coordCase, environment.getEtat(coordCase));
+		  map.addCase(coordCase,environment.getEtat(coordCase));
+	  }
+	this.measure.setNbSeeingObst(nbrObst);
+	matrixViewRobot = e.environmentToMatrixAff();
+	this.updateRobotDiscoveredMap(map);
+
+  }
   //
   // Other methods
   //
 
-  
-
-  /**Test if next case is in the environment and if there is not an obstacle on the way
+/**Test if next case is in the environment and if there is not an obstacle on the way
    * If not, make the move
    * @return       Boolean to acquire 
    */
@@ -70,13 +184,18 @@ public class Simulation {
 	  Coord newCoord = Coord.add(this.robotControler.getRobotCoord(), new Coord(-1, 0));
 	  Boolean ret = false;
 	  if (newCoord.x >= 0){ // Test the limit of the environnement
-		  Etat etatNextCase = this.environnement.getEtat(newCoord);
+		  Etat etatNextCase = this.environment.getEtat(newCoord);
 		  if ( etatNextCase.compareTo(Etat.OBSTACLE) != 0 ){ // Test if the next case is an obstacle
 			  ret = this.robotControler.up();
-
+			  this.measure.incDistanceTraveled();
+		  }
+		  else {
+			  this.measure.incNbMetObst();
 		  }
 	  }
-	  refreshAff();
+
+	  refreshAttribut();
+	  this.measure.incNbCmd();
 	  return ret;
   }
 
@@ -89,14 +208,19 @@ public class Simulation {
   {
 	  Coord newCoord = Coord.add(this.robotControler.getRobotCoord(), new Coord(1, 0));
 	  Boolean ret = false;
-	  if ( newCoord.x <= this.environnement.getSize().x){ // Test the limit of the environnement
-		  Etat etatNextCase = this.environnement.getEtat(newCoord);
+	  if ( newCoord.x <= this.environment.getSize().x){ // Test the limit of the environnement
+		  Etat etatNextCase = this.environment.getEtat(newCoord);
 		  if ( etatNextCase.compareTo(Etat.OBSTACLE) != 0 ){ // Test if the next case is an obstacle
 			  ret = this.robotControler.down();
-
+			  this.measure.incDistanceTraveled();
+		  }
+		  else {
+			  this.measure.incNbMetObst();
 		  }
 	  }
-	  refreshAff();
+
+	  this.measure.incNbCmd();
+	  refreshAttribut();
 	  return ret;
   }
 
@@ -110,13 +234,18 @@ public class Simulation {
 	  Coord newCoord = Coord.add(this.robotControler.getRobotCoord(), new Coord(0, -1));
 	  Boolean ret = false;
 	  if (newCoord.y >= 0){ // Test the limit of the environment
-		  Etat etatNextCase = this.environnement.getEtat(newCoord);
+		  Etat etatNextCase = this.environment.getEtat(newCoord);
 		  if ( etatNextCase.compareTo(Etat.OBSTACLE) != 0 ){ // Test if the next case is an obstacle
 			  ret = this.robotControler.left();
-
+			  this.measure.incDistanceTraveled();
+		  }
+		  else {
+			  this.measure.incNbMetObst();
 		  }
 	  }
-	  refreshAff();
+
+	  this.measure.incNbCmd();
+	  refreshAttribut();
 	  return ret;
   }
 
@@ -129,65 +258,56 @@ public class Simulation {
   {
 	  Coord newCoord = Coord.add(this.robotControler.getRobotCoord(), new Coord(0, 1));
 	  Boolean ret = false;
-	  if (newCoord.x <= this.environnement.getSize().x){ // Test the limit of the environment
-		  Etat etatNextCase = this.environnement.getEtat(newCoord);
+	  if (newCoord.x <= this.environment.getSize().x){ // Test the limit of the environment
+		  Etat etatNextCase = this.environment.getEtat(newCoord);
 		  if ( etatNextCase.compareTo(Etat.OBSTACLE) != 0 ){ // Test if the next case is an obstacle
 			  ret = this.robotControler.right();
+			  this.measure.incDistanceTraveled();
 
 		  }
+		  else {
+			  this.measure.incNbMetObst();
+		  }
 	  }
-	  refreshAff();
+
+	  this.measure.incNbCmd();
+	  refreshAttribut();
 	  return ret;
   }
 
 
-  /**
-   */
-  public String[][] getView()
-  {
-	  
-	  Environnement e = new Environnement(this.environnement.getSize());
-	  String[][] ret = e.environmentToMatrixAff();
 
-	  Integer nbrObst = 0;
-	  List<Coord> caseDetected = this.robotControler.getView();
-	  Etat etatCase;
-	  for(Coord coordCase : caseDetected){
-		  etatCase = environnement.getEtat(coordCase);
-		  
-		  if (etatCase.equals(Etat.OBSTACLE)){
-			  nbrObst++;
-		  }
-		  e.setEtat(coordCase, environnement.getEtat(coordCase));
-		  
-	  }
-	  ret = this.affRobot(e, ret);
-
-	return ret;
-  }
   
-  //TODO gérer affichage
- /* public void affView(){
-	  System.out.println(printMatrix(view,e.getSize().x,e.getSize().y));
-
-  }
-*/
-
   /**
+   * Update of the map of the robot
+   * @param map
    */
-  public void getRobotEnvironnement()
-  {
-	  this.robotControler.getRobotEnvironnement();
+  public void updateRobotDiscoveredMap(Map map){
+	  this.robotControler.updateDiscoveredMap(map);
   }
+
+ 
   
-    
-  private String[][] affRobot(Environnement e, String[][] string){
+  /**
+   * Add the robot in the board
+   * @param e all environment
+   * @param string which will have the robot add on
+   * @return board with all of the environment and the robot
+   */
+  private String[][] addRobotInMatrix(String[][] string){
 	  String [][] ret = string;
 	  Coord coordRobot = this.robotControler.getRobotCoord();
 	  ret[coordRobot.x][coordRobot.y] = "R : "+this.robotControler.getRobotOrientation().toString();
 	  return ret;
   }
   
+  /**
+   * Convert a board in a 1D string
+   * @param matrix board to convert
+   * @param sizeX size of the board
+   * @param sizeY size of the board
+   * @return string 1D on the board. Ready to be print
+   */
   public static String printMatrix(String[][] matrix,int sizeX,int sizeY) {
 	  StringBuilder sb = new StringBuilder();
 	  Formatter formatter = new Formatter(sb, Locale.FRENCH);
@@ -214,13 +334,43 @@ public class Simulation {
 	return formatter.toString() ;
   }
   
-  private void refreshAff(){
-	  this.matrix = environnement.environmentToMatrixAff();
-	  this.matrix = this.affRobot(environnement, this.matrix);
+  /**
+   * Refresh the environment and the robot in the attribute matrix
+   */
+  private void refreshAttribut(){
+	  this.matrixEnvironment = environment.environmentToMatrixAff();
+	  this.getView();
   }
   
+  
+  ////
+  //method to display in command line
+  ////
+  
+  /**
+   * Display in command line the environment
+   */
   public void affEnvironnement(){
-	  System.out.println(printMatrix(matrix,environnement.getSize().x,environnement.getSize().y));
+	  this.matrixEnvironment = this.addRobotInMatrix(this.matrixEnvironment);
+	  System.out.println(printMatrix(matrixEnvironment,environment.getSize().x,environment.getSize().y));
+
+  }
+  
+  /**
+   * Display in command line of the view of the robot
+   */
+  public void affView(){
+	this.matrixViewRobot = this.addRobotInMatrix(this.matrixViewRobot);
+	System.out.println(printMatrix(matrixViewRobot,environment.getSize().x,environment.getSize().y));
+
+  }
+  
+  /**
+   * Display in command line of the view of the robot
+   */
+  public void affRobotDiscoveredMap(){
+	  String[][] matrixRobotEnv = this.getMatrixKnownEnvironment();
+	  System.out.println(printMatrix(matrixRobotEnv,environment.getSize().x,environment.getSize().y));
 
   }
 

@@ -8,7 +8,7 @@ public class Measure {
 
   private Integer nbCmd = 0;
   private Integer nbMetObst = 0;
-  private Integer nbSeenObst = 0;
+  private Integer nbSeeingObst = 0;
   private Integer distanceTraveled = 0;
   
 
@@ -17,13 +17,7 @@ public class Measure {
   };
   
 
-  /**
-   * Set the value of nbCmd
-   * @param newVar the new value of nbCmd
-   */
-  public void setNbCmd (Integer nbCmd) {
-    nbCmd = nbCmd;
-  }
+
 
   /**
    * Get the value of nbCmd
@@ -33,13 +27,7 @@ public class Measure {
     return nbCmd;
   }
 
-  /**
-   * Set the value of nbMetObst
-   * @param newVar the new value of nbMetObst
-   */
-  public void setNbMetObst (Integer nbMetObst) {
-    nbMetObst = nbMetObst;
-  }
+ 
 
   /**
    * Get the value of nbMetObst
@@ -56,29 +44,21 @@ public class Measure {
    *  * @return le nb d'ostacle visible grâce au controler
    */
   //TODO
-  public Integer getNbSeenObst()
+  public Integer getNbSeeingObst()
   {
-	return nbSeenObst;
+	return nbSeeingObst;
 	 
   }
 
   /**
-   * Set the value of nbSeenObst
-   * @param newVar the new value of nbSeenObst
+   * Set the value of nbSeeingObst
+   * @param newVar the new value of nbSeeingObst
    */
-  public void setNbSeenObst (Integer nbSeenObst) {
-    nbSeenObst = nbSeenObst;
+  public void setNbSeeingObst (Integer nbSeeingObst) {
+    this.nbSeeingObst = nbSeeingObst;
   }
 
 
-
-  /**
-   * Set the value of distanceTraveled
-   * @param newVar the new value of distanceTraveled
-   */
-  public void setDistanceTraveled (Integer distanceTraveled) {
-    distanceTraveled = distanceTraveled;
-  }
 
   /**
    * Get the value of distanceTraveled
@@ -94,7 +74,7 @@ public class Measure {
   public void incNbCmd()
   {
 	  
-	  this.nbCmd=getNbCmd()+1;
+	  this.nbCmd++;
 	
   }
 
@@ -106,7 +86,7 @@ public class Measure {
   public void incNbMetObst()
   {
 	 
-	  this.nbMetObst=getNbMetObst()+getNbSeenObst();
+	  this.nbMetObst++;
 	 
   }
 
@@ -117,7 +97,7 @@ public class Measure {
    */
   public void incDistanceTraveled()
   {
-	this.distanceTraveled=getDistanceTraveled()+distanceTraveled;
+	this.distanceTraveled++;
 	
   }
 

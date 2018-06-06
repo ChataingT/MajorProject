@@ -16,6 +16,7 @@ public class Map {
   public Map () { 
 	  listCase = new ArrayList<Case>();
 	  case1 = new Case(0,0); 
+	  listCase.add(case1);
   };
   
 
@@ -49,8 +50,22 @@ public Map (Coord size) {
 	  listCase.add(case1);
   }
   
+  public void addCase(Coord c, Etat e){
+	  Case cas = new Case(c.x, c.y);
+	  cas.setEtat(e);
+	  listCase.add(cas);
+  }
+  
   public List<Case> getListCase () {
     return listCase;  
+  }
+  
+  public List<Coord> getListCoord(){
+	  List<Coord> ret = new ArrayList<Coord>();
+	  for (Case c : listCase){
+		  ret.add(c.getCoord());
+	  }
+	  return ret;
   }
   
   
