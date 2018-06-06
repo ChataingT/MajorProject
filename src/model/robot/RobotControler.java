@@ -33,6 +33,10 @@ public class RobotControler {
   public Coord getRobotCoord () {
     return robot.getCoord();
   }
+  
+  public Orientation getRobotOrientation(){
+	  return this.robot.getOrientation();
+  }
 
   //
   // methods
@@ -43,7 +47,7 @@ public class RobotControler {
    */
   public Boolean up()
   {
-	  this.robot.setCoord(Coord.add(this.robot.getCoord(), new Coord(1, 0)));
+	  this.robot.setCoord(Coord.add(this.robot.getCoord(), new Coord(-1, 0)));
 	  this.robot.setOrientation(Orientation.NORTH);
 	  return true;
   }
@@ -54,7 +58,7 @@ public class RobotControler {
    */
   public Boolean down()
   {
-	  this.robot.setCoord(Coord.add(this.robot.getCoord(), new Coord(-1, 0)));
+	  this.robot.setCoord(Coord.add(this.robot.getCoord(), new Coord(1, 0)));
 	  this.robot.setOrientation(Orientation.SOUTH);
 	  return true;
   }

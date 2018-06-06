@@ -95,7 +95,7 @@ public class Robot {
   }
 
   /**
-   * Set the value of discoveredMap
+   * Set the value of discoveredMap with the union of the old one and the new one.
    * @param newVar the new value of discoveredMap
    */
    protected void setDiscoveredMap (Map map) {
@@ -134,7 +134,7 @@ public class Robot {
 	  }
 
 	  for (Coord c : list){
-		  newCoord = Coord.add(this.coord, c); // Go to the absolute referentiel
+		  newCoord = Coord.add(this.coord, c); // Go to the absolute referential
 		  ret.add(newCoord);
 	  }
 

@@ -30,7 +30,7 @@ public class Case {
    * Get the value of etat
    * @return the value of etat
    */
-  protected Etat getEtat () {
+  public Etat getEtat () {
     return etat;
   }
 

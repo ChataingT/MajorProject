@@ -21,7 +21,7 @@ public class Measure {
    * Set the value of nbCmd
    * @param newVar the new value of nbCmd
    */
-  private void setNbCmd (Integer nbCmd) {
+  public void setNbCmd (Integer nbCmd) {
     nbCmd = nbCmd;
   }
 
@@ -29,7 +29,7 @@ public class Measure {
    * Get the value of nbCmd
    * @return the value of nbCmd
    */
-  private Integer getNbCmd () {
+  public Integer getNbCmd () {
     return nbCmd;
   }
 
@@ -37,7 +37,7 @@ public class Measure {
    * Set the value of nbMetObst
    * @param newVar the new value of nbMetObst
    */
-  private void setNbMetObst (Integer nbMetObst) {
+  public void setNbMetObst (Integer nbMetObst) {
     nbMetObst = nbMetObst;
   }
 
@@ -45,7 +45,7 @@ public class Measure {
    * Get the value of nbMetObst
    * @return the value of nbMetObst
    */
-  private Integer getNbMetObst () {
+  public Integer getNbMetObst () {
     return nbMetObst;
   }
 
@@ -66,7 +66,7 @@ public class Measure {
    * Set the value of nbSeenObst
    * @param newVar the new value of nbSeenObst
    */
-  private void setNbSeenObst (Integer nbSeenObst) {
+  public void setNbSeenObst (Integer nbSeenObst) {
     nbSeenObst = nbSeenObst;
   }
 
@@ -76,7 +76,7 @@ public class Measure {
    * Set the value of distanceTraveled
    * @param newVar the new value of distanceTraveled
    */
-  private void setDistanceTraveled (Integer distanceTraveled) {
+  public void setDistanceTraveled (Integer distanceTraveled) {
     distanceTraveled = distanceTraveled;
   }
 
@@ -84,7 +84,7 @@ public class Measure {
    * Get the value of distanceTraveled
    * @return the value of distanceTraveled
    */
-  private Integer getDistanceTraveled () {
+  public Integer getDistanceTraveled () {
     return distanceTraveled;
   }
 

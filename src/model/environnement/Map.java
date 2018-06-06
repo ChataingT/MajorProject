@@ -101,5 +101,13 @@ public Map (Coord size) {
 	  
 	  
   }
+  
+  public void setEtatCase (Coord c, Etat e){
+	  for (Case case1 : getListCase()){
+			if (case1.getCoord().equals(c)){
+				case1.setEtat(e);
+			}
+		}
+  }
 
 }
