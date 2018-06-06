@@ -11,9 +11,7 @@ public class Measure {
   private Integer nbSeenObst = 0;
   private Integer distanceTraveled = 0;
   
-  //
-  // Constructors
-  //
+
   public Measure () { 
 	  
   };
@@ -51,6 +49,19 @@ public class Measure {
     return nbMetObst;
   }
 
+
+
+  /**
+   * Nb d'obstacle que voit à l'instant t le robot
+   *  * @return le nb d'ostacle visible grâce au controler
+   */
+  //TODO
+  public Integer getNbSeenObst()
+  {
+	return nbSeenObst;
+	 
+  }
+
   /**
    * Set the value of nbSeenObst
    * @param newVar the new value of nbSeenObst
@@ -59,13 +70,7 @@ public class Measure {
     nbSeenObst = nbSeenObst;
   }
 
-  /**
-   * Get the value of nbSeenObst
-   * @return the value of nbSeenObst
-   */
-  private Integer getNbSeenObst () {
-    return nbSeenObst;
-  }
+
 
   /**
    * Set the value of distanceTraveled
@@ -86,34 +91,22 @@ public class Measure {
   /**
    * Ajoute 1 au nb de commande
    */
-  public Integer incNbCmd()
+  public void incNbCmd()
   {
-	  Integer NbCmd;
-	  NbCmd=getNbCmd()+1;
-	  return NbCmd;
+	  
+	  this.nbCmd=getNbCmd()+1;
+	
   }
 
 
   /**
  * @return Nb d'obstacle rencontre
- * Ajoute 1 au nb d'obstacle rencontré
+ * Ajoute le nb d'obstacle rencontré
    */
-  public Integer incNbMetObst()
+  public void incNbMetObst()
   {
-	  Integer NbMetObst;
-	  NbMetObst=getNbMetObst()+1;
-	  return NbMetObst;
-  }
-
-
-  /**
-   * Nb d'obstacle que voit à l'instant t le robot
-   *  * @return le nb d'ostacle visible grâce au controler
-   */
-  //TODO
-  public Integer nbSeenObst()
-  {
-	return nbSeenObst;
+	 
+	  this.nbMetObst=getNbMetObst()+getNbSeenObst();
 	 
   }
 
@@ -122,10 +115,10 @@ public class Measure {
    * Permet de donner la distance parcourue par le robot depuis le début de la session
    * return la distance parcourue
    */
-  public Integer incDistanceTraveled(Integer distanceTraveled)
+  public void incDistanceTraveled()
   {
-	distanceTraveled=getDistanceTraveled()+distanceTraveled;
-	return distanceTraveled;
+	this.distanceTraveled=getDistanceTraveled()+distanceTraveled;
+	
   }
 
 
