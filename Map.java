@@ -50,21 +50,25 @@ public Map (Coord size) {
     return listCase;  
   }
   
-  
+  /*
+   * Compare deux maps et ajoute à l'ancienne les cases découvertes en plus de la nouvelle
+   */
   public static Map unionMap (Map oldMap, Map newMap){
 	  for (Case cases1 :newMap.getListCase()){
 		  Integer flag = 0;
 		  for (Case case2 : oldMap.getListCase()){
-			  System.out.println ("case1"+cases1.getCoord()+"case2"+case2.getCoord());
-			  if (cases1.getCoord() == case2.getCoord()){
+			  //System.out.println ("case1"+cases1.getCoord()+"case2"+case2.getCoord());
+			  if (cases1.getCoord().equals(case2.getCoord())){
 				  flag=1;
+				  //System.out.println ("flag1");
 			  }
 					
 		  }
 		  //Signifit qu'une nouvelle case à été découverte
 		  if (flag==0){
-			  System.out.println ("flag");
+			  //System.out.println ("ajout"+cases1.getCoord());
 			  oldMap.addCase (cases1);
+			  
 		  }
 	  }
 	  
@@ -74,6 +78,23 @@ public Map (Coord size) {
 	  }
 	  	  
 	  return oldMap;
+  }
+  /**
+   * Permet de donner l'etat d'une case
+   * @param coord
+   * @return
+   */
+  public Etat getEtatCase (Coord coord){
+	Etat etatCase=Etat.UNKNOWN;
+	for (Case case1 : getListCase()){
+		if (case1.getCoord().equals(coord)){
+			etatCase=case1.getEtat();
+		}
+	}
+	 	  
+	return etatCase;
+	  
+	  
   }
 
 

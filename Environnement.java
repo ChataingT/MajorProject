@@ -45,7 +45,7 @@ public class Environnement {
    * Set the value of size
    * @param newVar the new value of size
    */
-  private void setSize (Coord size) {
+  public void setSize (Coord size) {
     size = size;
   }
 
@@ -84,6 +84,12 @@ public class Environnement {
     return obstaclePercent;
   }
   
+  
+  public Etat getEtat (Coord coord){
+	  Etat etatCase= Etat.UNKNOWN;
+	  etatCase=map.getEtatCase(coord);
+	  return etatCase;
+  }
   
   
  
