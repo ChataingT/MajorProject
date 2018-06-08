@@ -4,28 +4,45 @@
     <head>
         <title>Administration</title>
         <meta charset='UTF-8' />
+        <link href="css/main.css" media="screen" rel="stylesheet" type="text/css" />
     </head>
 
     <body>
 
-        <form method="post" action="">
+    <div id="navLinks" class="hidden">
+
+        <a href="admin.html" class="hidden" id="admin-link">Administration</a>
+        <a href="cmd.html">Commande</a>
+        <a id="deconnect" href="#">Déconnexion</a>
+
+    </div>
+
+    <div id="forms" class="hidden">
+
+        <form>
 
             <label for="c_login">Login</label><input id="c_login" name="c_login" type="text" />
             <label for="c_pass">Mot de passe</label><input id="c_pass" name="c_pass" type="text" />
-            <input type="submit" value="Valider" />
+            <input id="c_submit" type="submit" value="Valider" />
 
         </form>
 
-        <form method="post" action="">
+        <form>
 
             <label for="i_login">Login</label><input id="i_login" name="i_login" type="text" />
             <label for="i_pass">Mot de passe</label><input id="i_pass" name="i_pass" type="text" />
             <label for="i_pass_confirm">Confirmation</label><input id="i_pass_confirm" name="i_pass" type="text" />
 
-            <input type="submit" value="Valider" />
+            <input id="i_submit" type="submit" value="Valider" />
 
         </form>
 
+    </div>
+
+	<script src="lib/jquery-3.2.1.min.js" type="text/javascript"></script>
+	<script type="module" src="js/index.js" ></script>
+
+        
     </body>
 
 </html>
