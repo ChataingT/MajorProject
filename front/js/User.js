@@ -1,8 +1,24 @@
 class User{
+
+    constructor(login, token) {
+
+        this.login = login;
+        this.token = token;
+    }
     
-    constructor() {
-        this.token = null;
-        this.id = null;
+    static restore() {
+
+        data = localStorage.getItem('user');
+
+        if(data === undefined || data === null) {
+
+            return null;
+        } else if(!(login in data) || !(token in data)) {
+
+            return false;
+        }
+
+        return new User(data.login, data.token);
     }
     
     verify(callback) {
@@ -15,10 +31,10 @@ class User{
         //Ajax : is the user administrator?
         callback(true);
     }
-    
-    persist(callback) {
-        //Ajax : save the user in the database if it doesn't exists
-        callback(true);
+
+    getLogin() {
+
+        return this.getLogin();
     }
 }
 
