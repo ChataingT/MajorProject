@@ -8,12 +8,12 @@ class User{
     
     static restore() {
 
-        data = localStorage.getItem('user');
+        let data = localStorage.getItem('user');
 
         if(data === undefined || data === null) {
 
             return null;
-        } else if(!(login in data) || !(token in data)) {
+        } else if(data.login === undefined || data.token === undefined) {
 
             return false;
         }
