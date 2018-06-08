@@ -14,9 +14,9 @@ class MapView {
         let img_test=$("#img_test_id")[0];
         
         if (layer.type !== "tilelayer" || !layer.opacity) { return; }
-        let s = this.c.canvas.cloneNode();
+        //let s = this.c.canvas.cloneNode();
         let size = this.data.tilewidth;
-        s = s.getContext("2d");
+        //s = s.getContext("2d");
         if (this.layers.length < this.data.layers.length) {
             let s_y_t_1=0;
             layer.data.forEach(function(tile_idx, i) {
@@ -38,7 +38,7 @@ class MapView {
                 
           }.bind(this));
           //this.layers.push(s.canvas.toDataURL());
-          s.drawImage(s.canvas, 0, 0);
+          //s.drawImage(s.canvas, 0, 0);
         }
         else {
           this.layers.forEach(function(src) {
