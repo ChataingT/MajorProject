@@ -36,6 +36,11 @@ class User{
 
         return this.getLogin();
     }
+
+    getToken() {
+
+        return this.getToken();
+    }
 }
 
 export {User};
