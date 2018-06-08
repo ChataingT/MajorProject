@@ -114,8 +114,8 @@ public class UserRestController {
             //Verify user's token/ user is admin
         	 //System.out.println(userService.verifyUser(login,token));
         	 System.out.println(getUser(login));
-        	 System.out.println(userService.isUserAdmin(userRepository.findByLogin(login)));
-            if (userService.verifyUser(login,token) && userService.isUserAdmin(userRepository.findByLogin(login)))
+        	 System.out.println(userService.isUserAdmin(userService.findByLogin(login)));
+            if (userService.verifyUser(login,token) && userService.isUserAdmin(userService.findByLogin(login)))
             {
 
             	System.out.println("Dans le if");
