@@ -3,6 +3,12 @@ html, body
     height: 100%;
     margin: 0; padding: 0;
 }
+
+.hidden
+{
+    display: none;
+}
+
 #main
 {
     padding: 0; margin: 0;
@@ -68,4 +74,48 @@ html, body
 header {
     font-size: 25px;
     background-color: #cec7b9;
+}
+
+.rotate
+{
+    animation: rotation 3s infinite;
+    animation-timing-function: linear;
+}
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.squeeze
+{
+    animation: squeeze 4s infinite;
+    animation-timing-function: linear;
+}
+@keyframes squeeze {
+    0% {
+        transform: rotate(0deg);
+    }
+    1% {
+        transform: rotate(-10deg);
+    }
+    3% {
+        transform: rotate(10deg);
+    }
+    5% {
+        transform: rotate(-10deg);
+    }
+    7% {
+        transform: rotate(10deg);
+    }
+    8% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
 }
