@@ -7,14 +7,16 @@ import Simulation.model.Coord;
 
 public class Obstacle {
 	
-	private Integer id;
 	private List<Coord> listCoordObst;
 	private List<Coord> listCoordMove;
 	private Boolean mapped;
 	
-	
+	/**
+	 * Constructor of obstacle
+	 * @param c coordinate of the first part of the obstacle
+	 * @param m coordinate of the first move for the robot
+	 */
 	public Obstacle(Coord c, Coord m){
-		this.id = c.x*c.y;
 		this.listCoordMove = new ArrayList<Coord>();
 		this.listCoordMove.add(c);
 
@@ -24,48 +26,81 @@ public class Obstacle {
 		this.mapped = false;
 	}
 
-
-	public Integer getId() {
-		return id;
-	}
-
+	/**
+	 * Get the list of coord of the obstacle
+	 * @return
+	 */
 	private List<Coord> getListCoordObst() {
 		return listCoordObst;
 	}
 
-
+	/**
+	 * Get the list of the move to go around the obstacle
+	 * @return
+	 */
 	public List<Coord> getListCoordMove() {
 		return listCoordMove;
 	}
 	
+	/**
+	 * Set this obstacle as mapped
+	 * @param b
+	 */
 	public void setMapped(Boolean b){
 		this.mapped = b;
 	}
 	
+	/**
+	 * Get the statue of the boolean : mapped or not
+	 * @return
+	 */
 	public Boolean getMapped(){
 		return this.mapped;
 	}
 	
+	/**
+	 * Add a coordinate of obstacle at the list of it
+	 * @param c
+	 */
 	public void addListCoordObst(Coord c){
 		if( !(listCoordObst.contains(c)) ){
 			this.listCoordObst.add(c);
 		}
 	}
 	
+	/**
+	 * Add a move at the list of move
+	 * @param c
+	 */
 	public void addListCoordMove(Coord c){
 		this.listCoordMove.add(c);
 	}
 	
+	/**
+	 * Test is this coordinate are part of this obstacle
+	 * @param obst coordinate to be tested
+	 * @return
+	 */
 	public Boolean testIsKnownObst( Coord obst){
 		return this.listCoordObst.contains(obst);
 	}
 	
+	/**
+	 * As up
+	 * @param c
+	 * @return
+	 */
 	public Boolean isInListCoordObst( Coord c){
 		Boolean ret = false;
 		ret = this.listCoordObst.contains(c);
 		return ret;
 	}
 	
+	/**
+	 * Extract the list of move to do to get around the obstacle
+	 * @param start
+	 * @return
+	 */
 	public List<Coord> getCoordMove(Coord start){
 		List<Coord> ret = new ArrayList<Coord>();
 		int iStart = this.listCoordMove.indexOf(start)+1;
@@ -82,6 +117,12 @@ public class Obstacle {
 		
 	}
 	
+	/**
+	 * Get the end of the way to go aroung the obstacle
+	 * @param c
+	 * @param start
+	 * @return
+	 */
 	private int getEndCoord(Coord c, int start){
 		int ret = 0;
 		
@@ -115,6 +156,7 @@ public class Obstacle {
 		return ret;
 	}
 	
+	// Test
 	public static void main(String[] args) {
 		Coord c = new Coord(1,1);
 		Coord cur = Coord.add(c,2);
