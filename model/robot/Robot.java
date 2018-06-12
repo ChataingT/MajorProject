@@ -109,7 +109,7 @@ public class Robot {
    * Get the value of discoveredMap
    * @return the value of discoveredMap
    */
-   protected Map getDiscoveredMap () {
+   public Map getDiscoveredMap () {
     return discoveredMap;
   }
 
@@ -138,7 +138,9 @@ public class Robot {
 
 	  for (Coord c : list){
 		  newCoord = Coord.add(this.coord, c); // Go to the absolute referential
-		  ret.add(newCoord);
+		  if ( (newCoord.x >=0) && (newCoord.y >=0) ){
+			  ret.add(newCoord);
+		  }
 	  }
 
 	  return ret;

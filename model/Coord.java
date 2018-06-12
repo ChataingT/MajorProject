@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author francoise.perrin
  *
  */
-public class Coord implements Serializable {
+public class Coord implements Serializable, Comparable<Coord> {
 	
 	public int x, y;
 	
@@ -74,6 +74,39 @@ public class Coord implements Serializable {
 		c.x = a.x + b.x;
 		c.y = a.y + b.y;
 		return c;
+	}
+	
+	public static Coord add(Coord a, int i){
+		Coord c = new Coord(0, 0);
+		if(i==0){
+			c = Coord.add(a, new Coord(-1,0));
+		}
+		else if(i==1){
+			c = Coord.add(a, new Coord(0,1));
+		}
+		else if(i==2){
+			c = Coord.add(a, new Coord(1,0));
+		}
+		else{
+			c = Coord.add(a, new Coord(0,-1));
+		}
+
+		return c;
+	}
+
+	@Override
+	public int compareTo(Coord arg0) {
+		int ret = 0;
+		if (this.x == arg0.x){
+			ret = 0;
+		}
+		else if (this.x > arg0.x){
+			ret = 1;
+		}
+		else {
+			ret = -1;
+		}
+		return ret;
 	}
 	
 

@@ -47,7 +47,7 @@ public class Case {
    * @return the value of coord
    */
   
-  protected Coord getCoord() {
+  public Coord getCoord() {
 	  return coord;
   }
 

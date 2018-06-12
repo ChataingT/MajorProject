@@ -37,6 +37,10 @@ public class RobotControler {
   public Orientation getRobotOrientation(){
 	  return this.robot.getOrientation();
   }
+  
+  public Map getDiscoveredMap () {
+	    return this.robot.getDiscoveredMap();
+	  }
 
   //
   // methods

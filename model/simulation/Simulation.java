@@ -28,6 +28,7 @@ public class Simulation {
   private Measure measure;
   private String[][] matrixEnvironment;
   private String[][] matrixViewRobot;
+  private List<Integer> closeObst =  new ArrayList<Integer>(4); // 0=free 1=obstacle up/right/down/left;
   
   //
   // Constructors
@@ -37,6 +38,10 @@ public class Simulation {
 	  this.environment = new Environnement(new Coord(x, y), obstaclePourcent, speedBumpPourcent);
 	  this.measure = new Measure();
 	  this.refreshAttribut();
+	  this.closeObst.set(0,0);
+	  this.closeObst.set(1,0);
+	  this.closeObst.set(2,0);
+	  this.closeObst.set(3,0);
 
   };
   
@@ -144,24 +149,47 @@ public class Simulation {
 	  return this.robotControler.getRobotOrientation();
   }
   
+  public Coord getSize(){
+	  return this.environment.getSize();
+  }
  
   
   /**Extract the view of the robot defined by his sensor
-   * @return String[][] board with the information of each case : unknown/free/obstacle/speedbump
+   * 
    */
-  public void getView()
+  private void getView()
   {
 	  Environnement e = new Environnement(this.environment.getSize());
 	  Map map= new Map();
 	  Integer nbrObst = 0;
 	  List<Coord> caseDetected = this.robotControler.getView();
 	  Etat etatCase;
+	  List<Integer> listObst = new ArrayList<Integer>();
+	  for (int i =0; i<4; i++){ // clear old data
+		  listObst.add(0);
+	  }
 	  
 	  for(Coord coordCase : caseDetected){
 		  etatCase = environment.getEtat(coordCase);
 		  
 		  if (etatCase.equals(Etat.OBSTACLE)){
 			  nbrObst++;
+			  if (coordCase.equals(Coord.add(this.robotControler.getRobotCoord(), 0)))
+					  {
+				  listObst.set(0, 1); // obstacle in up case
+			  }
+			  if (coordCase.equals(Coord.add(this.robotControler.getRobotCoord(), 1)))
+			  {
+				  listObst.set(1, 1); // obstacle in right case
+			  }
+			  if (coordCase.equals(Coord.add(this.robotControler.getRobotCoord(), 2)))
+			  {
+				  listObst.set(2, 1); // obstacle in down case
+			  }
+			  if (coordCase.equals(Coord.add(this.robotControler.getRobotCoord(), 3)))
+			  {
+				  listObst.set(3, 1); // obstacle in left case
+			  }
 		  }
 		  e.setEtat(coordCase, environment.getEtat(coordCase));
 		  map.addCase(coordCase,environment.getEtat(coordCase));
@@ -169,8 +197,16 @@ public class Simulation {
 	this.measure.setNbSeeingObst(nbrObst);
 	matrixViewRobot = e.environmentToMatrixAff();
 	this.updateRobotDiscoveredMap(map);
+	this.closeObst = listObst;
+	this.testBord();
 
   }
+  
+  public List<Integer> getCloseObst(){
+	  return this.closeObst;
+  }
+  
+
   //
   // Other methods
   //
@@ -191,6 +227,7 @@ public class Simulation {
 		  }
 		  else {
 			  this.measure.incNbMetObst();
+System.out.println("Obst !!!");
 		  }
 	  }
 
@@ -208,7 +245,7 @@ public class Simulation {
   {
 	  Coord newCoord = Coord.add(this.robotControler.getRobotCoord(), new Coord(1, 0));
 	  Boolean ret = false;
-	  if ( newCoord.x <= this.environment.getSize().x){ // Test the limit of the environnement
+	  if ( newCoord.x < this.environment.getSize().x){ // Test the limit of the environnement
 		  Etat etatNextCase = this.environment.getEtat(newCoord);
 		  if ( etatNextCase.compareTo(Etat.OBSTACLE) != 0 ){ // Test if the next case is an obstacle
 			  ret = this.robotControler.down();
@@ -258,7 +295,7 @@ public class Simulation {
   {
 	  Coord newCoord = Coord.add(this.robotControler.getRobotCoord(), new Coord(0, 1));
 	  Boolean ret = false;
-	  if (newCoord.x <= this.environment.getSize().x){ // Test the limit of the environment
+	  if (newCoord.y < this.environment.getSize().y){ // Test the limit of the environment
 		  Etat etatNextCase = this.environment.getEtat(newCoord);
 		  if ( etatNextCase.compareTo(Etat.OBSTACLE) != 0 ){ // Test if the next case is an obstacle
 			  ret = this.robotControler.right();
@@ -276,16 +313,56 @@ public class Simulation {
   }
 
 
-
+  /**
+   * Test if the robot is next to a border and upload listBorder
+   */
+  private void testBord(){
+	  Coord coordRobot = this.robotControler.getRobotCoord();
+	  List<Integer> listBord = new ArrayList<Integer>();
+	  for (int i =0; i<4; i++){ // clear old data
+		  listBord.add(0);
+	  }
+	  if (coordRobot.x == 0){
+		  listBord.set(0, 1);
+	  }
+	  if (coordRobot.y == this.environment.getSize().y-1){
+		  listBord.set(1, 1);
+	  }
+	  if (coordRobot.x == this.environment.getSize().x-1){
+		  listBord.set(2, 1);
+	  }
+	  if (coordRobot.y == 0){
+		  listBord.set(3, 1);
+	  }
+	  
+	  for (int i =0; i<4; i++){ // clear old data
+		  this.closeObst.set(i, this.closeObst.get(i)+listBord.get(i) );
+	  }	  
+  }
   
   /**
    * Update of the map of the robot
    * @param map
    */
-  public void updateRobotDiscoveredMap(Map map){
+  private void updateRobotDiscoveredMap(Map map){
 	  this.robotControler.updateDiscoveredMap(map);
   }
 
+  public Integer getPercentDiscoveredMap(){
+	  Double ret = 0.;
+	  List<Coord> discoveredMapToModify = this.robotControler.getDiscoveredMap().getListCoord();
+	  List<Coord> discoveredMap = new ArrayList<Coord>();
+	  discoveredMap.addAll(discoveredMapToModify);
+	  for(Coord c : discoveredMapToModify){
+		  if ( (c.x >= this.environment.getSize().x) || (c.y >= this.environment.getSize().y) ){
+			  discoveredMap.remove(c);
+		  }
+	  }
+	  double nbrKnown = discoveredMap.size();
+	  double nbrCaseMap = this.environment.getSize().x * this.environment.getSize().y;
+	  ret = Math.floor(nbrKnown / nbrCaseMap * 100);
+	  return ret.intValue();
+  }
  
   
   /**
@@ -308,7 +385,7 @@ public class Simulation {
    * @param sizeY size of the board
    * @return string 1D on the board. Ready to be print
    */
-  public static String printMatrix(String[][] matrix,int sizeX,int sizeY) {
+  private static String printMatrix(String[][] matrix,int sizeX,int sizeY) {
 	  StringBuilder sb = new StringBuilder();
 	  Formatter formatter = new Formatter(sb, Locale.FRENCH);
 	  String formatS = "%1$5s";
@@ -342,7 +419,7 @@ public class Simulation {
 	  this.getView();
   }
   
-  
+   
   ////
   //method to display in command line
   ////

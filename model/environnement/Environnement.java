@@ -34,29 +34,39 @@ public class Environnement {
 	  Integer nbObstaclePratique=0;
 	  Integer nbSpeedBumpPratique=0;
 	  Integer nbCase=size.x*size.y;
+
 	  Integer nbObstacleTheorique=nbCase*obstaclePercent/100;
 	  Integer nbSpeedBumpTheorique=nbCase*speedBumpPercent/100;
 	  
 	  for (Case case1 : map.getListCase()){
 		  double numero= Math.random() * 100;
 		  double choice = Math.random();
-		  
-		  if (numero < obstaclePercent + speedBumpPercent) {
-			  if ((numero <= obstaclePercent) && (nbObstacleTheorique > nbObstaclePratique)){
-				  case1.setEtat(Etat.OBSTACLE);
-				  nbObstaclePratique= nbObstaclePratique+1;
+		  if ( !(case1.getCoord().x == 0 ||
+				  case1.getCoord().x == size.x-1 ||
+				  case1.getCoord().y == 0 ||
+				  case1.getCoord().y == size.y-1) ){
+			  if (numero < obstaclePercent + speedBumpPercent) {
+				  if ((numero <= obstaclePercent) && (nbObstacleTheorique > nbObstaclePratique)){
+					  case1.setEtat(Etat.OBSTACLE);
+					  nbObstaclePratique= nbObstaclePratique+1;
+					  
+				  }
+				  else if ((numero <= speedBumpPercent + obstaclePercent) && (nbSpeedBumpTheorique > nbSpeedBumpPratique)){
+					  case1.setEtat(Etat.SPEEDBUMP);
+					  nbSpeedBumpPratique= nbSpeedBumpPratique+1;
+					  
+				  }
 				  
 			  }
-			  else if ((numero <= speedBumpPercent + obstaclePercent) && (nbSpeedBumpTheorique > nbSpeedBumpPratique)){
-				  case1.setEtat(Etat.SPEEDBUMP);
-				  nbSpeedBumpPratique= nbSpeedBumpPratique+1;
-				  
+			  else {
+				  case1.setEtat(Etat.FREE);
 			  }
+			  
 		  }
 		  else {
 			  case1.setEtat(Etat.FREE);
 		  }
-			  
+				  
 	  }
 	  
   };
@@ -140,8 +150,8 @@ public class Environnement {
 	  String[][] matrix = new String[size.x][size.y];
 	  for (int j = 0 ; j < getSize().x ; j++ ){
 		  for (int i = 0 ; i < getSize().x ; i++ ){
-			// matrix[i][j] = getEtat(new Coord(i, j)).toAff();
-			 matrix[i][j] = getEtat(new Coord(i, j)).toSend();
+			  matrix[i][j] = getEtat(new Coord(i, j)).toAff();
+			  //matrix[i][j] = getEtat(new Coord(i, j)).toSend();
 		  }
 	  }
 	return matrix; 
